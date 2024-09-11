@@ -1,0 +1,138 @@
+const presentationWorkflow = {
+  metadata: {
+    title: "PLM for Tier 2 OEM Ventilator Supplier",
+    date: new Date("2024-10-07T09:00:00"),
+    duration: 120, // minutes
+    presenter: "Sales Genesis Member"
+  },
+  
+  sections: [
+    {
+      title: "Introduction",
+      duration: 10,
+      tasks: [
+        { description: "Welcome attendees", duration: 1 },
+        { description: "Introduce yourself and your role", duration: 1 },
+        { description: "Present agenda and objectives", duration: 3 },
+        { description: "Share the story of Genesis Fields transformation", duration: 5 }
+      ],
+      notes: "Start with energy and enthusiasm. Use the Genesis Fields story to set the stage for digital transformation."
+    },
+    {
+      title: "Industry Context",
+      duration: 15,
+      tasks: [
+        { description: "Overview of medical device industry trends", duration: 5 },
+        { description: "Challenges faced by tier 2 OEM suppliers", duration: 5 },
+        { description: "Regulatory landscape and compliance requirements", duration: 5 }
+      ],
+      notes: "Use recent industry statistics and regulatory updates. Emphasize the need for digital transformation."
+    },
+    {
+      title: "PLM as a Strategic Enabler",
+      duration: 20,
+      tasks: [
+        { description: "Introduction to PLM concept", duration: 5 },
+        { description: "Key capabilities of Teamcenter for medical devices", duration: 10 },
+        { description: "Benefits of PLM for ventilator manufacturing", duration: 5 }
+      ],
+      notes: "Use simple diagrams to explain PLM. Highlight specific benefits for ventilator manufacturing."
+    },
+    {
+      title: "Design Phase Demo",
+      duration: 25,
+      tasks: [
+        { description: "Demonstrate NX CAD integration with Teamcenter", duration: 10 },
+        { description: "Show collaborative design process", duration: 10 },
+        { description: "Illustrate requirements management in Polarion", duration: 5 }
+      ],
+      notes: "Use a ventilator component for the demo. Highlight how collaboration improves design quality."
+    },
+    {
+      title: "Engineering and Simulation Demo",
+      duration: 20,
+      tasks: [
+        { description: "Showcase Simcenter integration", duration: 5 },
+        { description: "Perform a simple fluid dynamics simulation", duration: 10 },
+        { description: "Demonstrate traceability of simulation results", duration: 5 }
+      ],
+      notes: "Focus on how simulation improves ventilator performance and reduces physical prototyping."
+    },
+    {
+      title: "Break",
+      duration: 10,
+      tasks: [
+        { description: "Allow attendees to stretch and refresh", duration: 10 }
+      ],
+      notes: "Use this time to set up for the next section and address any immediate questions."
+    },
+    {
+      title: "Manufacturing and Quality Demo",
+      duration: 25,
+      tasks: [
+        { description: "Demonstrate Teamcenter Manufacturing", duration: 10 },
+        { description: "Show quality management processes", duration: 10 },
+        { description: "Illustrate regulatory compliance documentation", duration: 5 }
+      ],
+      notes: "Emphasize how PLM improves manufacturing efficiency and ensures compliance."
+    },
+    {
+      title: "Traceability and Digital Thread",
+      duration: 20,
+      tasks: [
+        { description: "Showcase end-to-end traceability", duration: 10 },
+        { description: "Demonstrate digital twin concept", duration: 5 },
+        { description: "Show how real-world data improves design", duration: 5 }
+      ],
+      notes: "Use a specific example to illustrate the power of the digital thread."
+    },
+    {
+      title: "Implementation Roadmap",
+      duration: 15,
+      tasks: [
+        { description: "Present phased approach to PLM implementation", duration: 5 },
+        { description: "Discuss change management considerations", duration: 5 },
+        { description: "Share expected ROI and benefits", duration: 5 }
+      ],
+      notes: "Be realistic about implementation challenges while emphasizing long-term benefits."
+    },
+    {
+      title: "Q&A and Closing",
+      duration: 15,
+      tasks: [
+        { description: "Address audience questions", duration: 10 },
+        { description: "Recap key points", duration: 3 },
+        { description: "Provide call to action and next steps", duration: 2 }
+      ],
+      notes: "End on a high note. Encourage attendees to take the next step in their PLM journey."
+    }
+  ],
+  
+  runWorkflow: function() {
+    console.log(`Presentation: ${this.metadata.title}`);
+    console.log(`Date: ${this.metadata.date.toLocaleDateString()}`);
+    console.log(`Presenter: ${this.metadata.presenter}`);
+    console.log(`Total Duration: ${this.metadata.duration} minutes`);
+    console.log("\nDetailed Schedule:");
+    
+    let currentTime = new Date(this.metadata.date);
+    
+    this.sections.forEach((section, index) => {
+      console.log(`\n${index + 1}. ${section.title} (${section.duration} minutes)`);
+      console.log(`   Start Time: ${currentTime.toLocaleTimeString()}`);
+      console.log("   Tasks:");
+      
+      section.tasks.forEach((task, taskIndex) => {
+        console.log(`     ${taskIndex + 1}. ${task.description} (${task.duration} minutes)`);
+      });
+      
+      console.log(`   Notes: ${section.notes}`);
+      
+      currentTime = new Date(currentTime.getTime() + section.duration * 60000);
+      console.log(`   End Time: ${currentTime.toLocaleTimeString()}`);
+    });
+  }
+};
+
+// Run the workflow
+presentationWorkflow.runWorkflow();
