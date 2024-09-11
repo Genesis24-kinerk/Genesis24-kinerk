@@ -26,20 +26,11 @@ workflow_content = {
                 },
                 {
                     'name': 'Install dependencies',
-                    'run': '''
-                        python -m pip install --upgrade pip
-                        pip install flake8 pytest
-                        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-                    '''
+                    'run': 'python -m pip install --upgrade pip\npip install flake8 pytest\nif [ -f requirements.txt ]; then pip install -r requirements.txt; fi'
                 },
                 {
                     'name': 'Lint with flake8',
-                    'run': '''
-                        # stop the build if there are Python syntax errors or undefined names
-                        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-                        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-                        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-                    '''
+                    'run': 'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics\nflake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics'
                 },
                 {
                     'name': 'Run Python tests',
@@ -54,10 +45,7 @@ workflow_content = {
                 },
                 {
                     'name': 'Run JavaScript-based linter',
-                    'run': '''
-                        npm install eslint
-                        npx eslint .
-                    '''
+                    'run': 'npm install eslint\nnpx eslint .'
                 }
             ]
         }
@@ -75,3 +63,4 @@ print('Python application workflow file has been created successfully.')
 
 # You can add this script to your Python project and run it to generate the workflow file
 # You might want to add it to your project's setup or build scripts
+
