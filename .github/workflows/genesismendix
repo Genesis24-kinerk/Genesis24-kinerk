@@ -1,0 +1,87 @@
+const { execSync } = require('child_process');
+
+class GitHubWorkflow {
+  constructor(repoUrl) {
+    this.repoUrl = repoUrl;
+  }
+
+  execute(command) {
+    try {
+      return execSync(command, { encoding: 'utf8' });
+    } catch (error) {
+      console.error(`Error executing command: ${command}`);
+      console.error(error.message);
+      process.exit(1);
+    }
+  }
+
+  setupRepository() {
+    this.execute(`git clone ${this.repoUrl}`);
+    this.execute('git checkout -b develop');
+    this.execute('git push -u origin develop');
+  }
+
+  createFeatureBranch(featureName) {
+    this.execute('git checkout develop');
+    this.execute(`git checkout -b feature/${featureName}`);
+    this.execute(`git push -u origin feature/${featureName}`);
+  }
+
+  completeFeature(featureName) {
+    this.execute('git checkout develop');
+    this.execute(`git merge --no-ff feature/${featureName}`);
+    this.execute('git push origin develop');
+    this.execute(`git branch -d feature/${featureName}`);
+    this.execute(`git push origin --delete feature/${featureName}`);
+  }
+
+  createRelease(version) {
+    this.execute('git checkout develop');
+    this.execute(`git checkout -b release/${version}`);
+    this.execute(`git push -u origin release/${version}`);
+  }
+
+  completeRelease(version) {
+    this.execute('git checkout main');
+    this.execute(`git merge --no-ff release/${version}`);
+    this.execute(`git tag -a v${version} -m "Release ${version}"`);
+    this.execute('git push --tags');
+    this.execute('git checkout develop');
+    this.execute(`git merge --no-ff release/${version}`);
+    this.execute('git push origin develop');
+    this.execute(`git branch -d release/${version}`);
+    this.execute(`git push origin --delete release/${version}`);
+  }
+
+  createHotfix(fixName) {
+    this.execute('git checkout main');
+    this.execute(`git checkout -b hotfix/${fixName}`);
+    this.execute(`git push -u origin hotfix/${fixName}`);
+  }
+
+  completeHotfix(fixName, version) {
+    this.execute('git checkout main');
+    this.execute(`git merge --no-ff hotfix/${fixName}`);
+    this.execute(`git tag -a v${version} -m "Hotfix ${version}"`);
+    this.execute('git push --tags');
+    this.execute('git checkout develop');
+    this.execute(`git merge --no-ff hotfix/${fixName}`);
+    this.execute('git push origin develop');
+    this.execute(`git branch -d hotfix/${fixName}`);
+    this.execute(`git push origin --delete hotfix/${fixName}`);
+  }
+}
+
+// Usage example
+const workflow = new GitHubWorkflow('https://github.com/yourusername/ventilator-plm-project.git');
+
+workflow.setupRepository();
+workflow.createFeatureBranch('new-ventilator-design');
+// ... work on the feature ...
+workflow.completeFeature('new-ventilator-design');
+workflow.createRelease('1.0.0');
+// ... prepare the release ...
+workflow.completeRelease('1.0.0');
+workflow.createHotfix('critical-bug-fix');
+// ... fix the critical bug ...
+workflow.completeHotfix('critical-bug-fix', '1.0.1');
